@@ -1,23 +1,33 @@
-import logo from './logo.svg';
 import './App.css';
+import { Routes, Route } from 'react-router-dom'
+import { useState } from 'react';
+import Contact from './Components/Contact';
+import Home from './Components/Home';
+import Service from './Components/Service';
+import contextTheme from './Context';
+
 
 function App() {
+  const [light, setLight] = useState(true);
+
+
+  const changeTheme = (e) => {
+    console.log("it is working");
+    setLight(e);
+  }
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={light === true?"App-header light": "App-header dark"}>
+      <contextTheme.Provider value={{ light, changeTheme }} >
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/service" element={<Service />} />
+          <Route path="/contact" element={<Contact />} />
+        </Routes>
+      </contextTheme.Provider>
+
+
     </div>
   );
 }
